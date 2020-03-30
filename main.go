@@ -48,7 +48,7 @@ func main3()  {
 	}
 	fmt.Println("main stopped")
 }
-func main()  {
+func main4()  {
 	fmt.Println("main started")
 	c:= make(chan int)
 	go square(c)
@@ -56,5 +56,24 @@ func main()  {
 	for val := range c {
 		fmt.Println(val)
 	}
+	fmt.Println("main stopped")
+}
+
+func squares( c chan int){
+	for i := 0; i <3; i++{
+		num := <- c
+		fmt.Println("square running ", num)
+	}
+	close(c)
+}
+func main()  {
+	fmt.Println("main started")
+	c:= make(chan int,3)
+	go squares(c)
+
+	c <- 1
+	c <- 2
+	c <- 3
+	c <- 4
 	fmt.Println("main stopped")
 }
