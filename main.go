@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func main1(){
 	var c chan int
@@ -66,7 +69,7 @@ func squares( c chan int){
 	}
 	close(c)
 }
-func main()  {
+func main5()  {
 	fmt.Println("main started")
 	c:= make(chan int,3)
 	go squares(c)
@@ -74,5 +77,49 @@ func main()  {
 	c <- 1
 	c <- 2
 	c <- 3
+	fmt.Println("main stopped")
+}
+
+type order struct {
+	name string
+}
+func food (c chan []order) {
+	time.Sleep(10)
+	 c <- []order{
+		{
+			"new",
+		},
+		{
+			"preparation",
+		},
+	}
+	close(c)
+}
+
+func kitchen () {
+	fmt.Println("running kitchen")
+	time.Sleep(10)
+}
+
+func drone () {
+	fmt.Println("running drone")
+	time.Sleep(10)
+}
+
+func main() {
+	fmt.Println("main started")
+	c:= make(chan []order,1)
+	go food(c)
+	orders := <- c
+	// close(c)
+	for _,order := range orders {
+		if order.name == "new" {
+			fmt.Println(order.name)
+			go kitchen()
+		}else if order.name == "preparation" {
+			fmt.Println(order.name)
+			go drone()
+		}
+	}
 	fmt.Println("main stopped")
 }
