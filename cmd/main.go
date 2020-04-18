@@ -22,23 +22,7 @@ func taskA(ctx context.Context, index int) {
 }
 
 func main() {
-	// var wg sync.WaitGroup
-	// for i := 0; i < 10; i++ {
-	// 	if i > 5 {
-	// 		wg.Add(1)
-	// 		go func(jobID int) {
-	// 			defer wg.Done()
-	// 			fmt.Printf("This is job: %v\n", jobID)
-	// 		}(i)
-	// 	} else if i < 5 {
-	// 		wg.Add(1)
-	// 		go func(jobID int) {
-	// 			defer wg.Done()
-	// 			fmt.Printf("This is job: %v\n", jobID)
-	// 		}(i)
-	// 	}
-	// }
-	// wg.Wait()
+
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	JobWithCtx(ctx, 10)
 	cancel()
