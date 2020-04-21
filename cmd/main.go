@@ -29,7 +29,6 @@ func main() {
 }
 
 func JobWithCtx(ctx context.Context, jobID int) {
-	// tick := time.Tick(500 * time.Millisecond)
 	i := 0
 	for {
 		if i == 0 {
